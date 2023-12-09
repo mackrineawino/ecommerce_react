@@ -1,13 +1,31 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@500&display=swap');
+
+
+
+:root {
+    --primary-blue: #49A3C8;
+    --primary-pink: #E0588E;
+    --primary-grey: #9FA6AE;
+
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@layer base {
+    html {
+        @apply scroll-smooth
+    }
+
+    body {
+        font-family: 'Fira Sans', sans-serif;
+        @apply m-0 p-0 leading-normal text-[16px];
+    }
+
+    * {
+        @apply m-0 p-0 outline-none box-border no-underline
+    }
+
+
 }
