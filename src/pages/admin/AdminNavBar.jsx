@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const AdminNavBar = () => {
+const AdminNavBar = ({ children }) => {
   return (
     <div className="flex h-screen">
       <div className="flex flex-col w-64 bg-gray-800 p-6 text-center">
@@ -18,10 +18,10 @@ const AdminNavBar = () => {
         <ul className="list-none text-[18px] mt-10">
           <li className="navitem">
             <Link
-              to="/adminhome"
+              to="/stats"
               className="text-white py-3 block hover:bg-gray-700"
             >
-              HOME
+              STATS
             </Link>
           </li>
           <li className="navitem">
@@ -59,8 +59,7 @@ const AdminNavBar = () => {
         </ul>
       </div>
       <div className="flex-1 p-8 bg-blue-100">
-        {/* Include your component or content here */}
-        {/* {requestScope.content} */}
+        {children}
       </div>
       <div
         id="confirmationModal"

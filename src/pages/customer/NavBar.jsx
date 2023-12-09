@@ -30,7 +30,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="flex justify-between bg-gray-100 rounded-md p-4 sticky top-0 z-50">
+    <div className="flex justify-between bg-gray-100 rounded-md p-4 sticky top-0 z-50 ml-[40px] mr-[40px]" >
       <div className="mt-1 ml-4">
         <h2 className="text-6xl font-bold">
           <Link

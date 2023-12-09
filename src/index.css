@@ -20,6 +20,7 @@
 
     body {
         font-family: 'Fira Sans', sans-serif;
+        background-color: #1E2837;
         @apply m-0 p-0 leading-normal text-[16px];
     }
 
