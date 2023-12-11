@@ -2,7 +2,7 @@ import React from 'react';
 
 const ProductGrid = ({ products }) => {
   return (
-    <div className="grid grid-cols-3 gap-4 mt-5 pl-[40px]">
+    <div className="grid grid-cols-3 gap-4 mt-5 pl-[40px] pr-[40px]">
       {products.map((product) => (
         <div key={product.id} className="bg-[#C2D7EB] p-4 rounded shadow-md text-center flex flex-col justify-center items-center transition-transform hover:scale-105">
           {/* Product Image */}

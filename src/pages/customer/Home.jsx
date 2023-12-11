@@ -1,12 +1,27 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import Nav from './NavBar'
 import ProductGrid from '../../components/ProductGrid'
 
 const Home = () => {
-  const products = [
-    { id: 1, imageUrl: 'https://github.com/mackrineawino/images/blob/main/805sa-pink-40-saheb-pink-original-imafghzfctaf4xdy-removebg-preview.png?raw=true', productName: 'Product 1', availability: 10, category: 'Category A' },
-    // Add more products as needed
-  ];
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/ecommerce/rest/products/list');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        setProducts(data);
+      } catch (error) {
+        console.error('Error fetching data:', error.message);
+      }
+    };
+
+    fetchData();
+  }, []); 
+
 
   return (
    
