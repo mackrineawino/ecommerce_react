@@ -52,6 +52,14 @@ const ViewProducts = () => {
         <div className="flex flex-col items-center justify-center h-screen ">
           <div><FaProductHunt  className="text-blue-500 text-[90px]" /></div>
           <p className="text-pink-500 text-2xl mt-[30px]">No Products Available At The Moment.</p>
+          <div className="mb-20 mt-[30px]">
+            <a
+              href="/addproducts"
+              className="block py-2 px-6 text-white bg-blue-500 rounded-md transition duration-300 ease-in-out hover:bg-pink-500"
+            >
+              ADD PRODUCTS
+            </a>
+          </div>
         </div>
       ) :(
         <div className="flex flex-col items-center">
