@@ -1,7 +1,24 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import AdminNav from './AdminNavBar';
 
-const AdminHome = ({ totalUsers = 100, totalProducts = 1000, totalOrders = 50, totalCategories = 9 }) => {
+const AdminHome = ({ totalUsers = 100, totalOrders = 50, totalCategories = 9 }) => {
+  const [totalProducts, setTotalProducts] = useState(0);
+
+  useEffect(() => {
+    // Fetch totalProducts data when the component mounts
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/ecommerce/rest/products/list');
+        const data = await response.json();
+        setTotalProducts(data.length);
+      } catch (error) {
+        console.error('Error fetching totalProducts:', error);
+      }
+    };
+
+    fetchData();
+  }, []); // The empty dependency array ensures that this effect runs once when the component mounts
+
   return (
     <div className="h-screen">
       <AdminNav>

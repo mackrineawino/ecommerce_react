@@ -13,6 +13,7 @@ import AdminNav from "./pages/admin/AdminNavBar";
 import Users from "./pages/admin/ViewUsers";
 import ViewOrders from "./pages/admin/ViewOrders";
 import ViewProducts from "./pages/admin/ViewProducts";
+import ItemCart from "./pages/customer/ItemCart";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route path="/vieworders" element={<ViewOrders />} />
           <Route path="/viewproducts" element={<ViewProducts />} />
           <Route path="/about" element={<About />} />
+          <Route path="/cart" element={<ItemCart />} />
         </Routes>
       </Router>
     </div>

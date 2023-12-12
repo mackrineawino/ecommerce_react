@@ -75,7 +75,7 @@ const Navbar = () => {
       </div>
 
       <div className="flex items-center space-x-6">
-        <Link to="/addToCart" className="relative">
+        <Link to="/cart" className="relative">
           <FaCartPlus className="text-[30px] text-[#49A3C8] cursor-pointer " />
           <span className="absolute top-[-10px] right-[-19px] bg-[#E0588E] text-white rounded-full px-2 py-1 text-xs">
             0
