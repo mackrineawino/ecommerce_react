@@ -66,30 +66,37 @@ const ProductDetails = () => {
       <Nav />
 
       {productDetails ? (
-        <div className="max-w-2xl mx-auto mt-8">
-          <div className="bg-white rounded-lg overflow-hidden shadow-md">
+        <div className='flex'>
+          <div className=" mt-8 flex ml-[40px] bg-white rounded mr-[40px] w-[60%] ">
+            {/* Image on the left */}
             {productDetails.imageUrl && (
-              <img src={productDetails.imageUrl} alt={productDetails.productName} className="w-full h-64 object-cover" />
+              <img src={productDetails.imageUrl} alt={productDetails.productName} className="w-[400px] h-[400px] rounded p-[20px]" />
             )}
-            <div className="p-6">
-              <h2 className="text-2xl font-bold mb-4">{productDetails.productName}</h2>
-              <p className="text-gray-600 mb-4">{productDetails.productDescription}</p>
-              <div className="flex items-center justify-between">
-                <p className="text-lg font-bold text-[var(--primary-pink)]">${productDetails.price}</p>
-                <p className="text-gray-600">Availability: {productDetails.availability} in stock</p>
-              </div>
+
+            {/* Product details on the right */}
+            <div className="ml-[40px] mt-[60px] bg-white w-[400px] h-[">
+              <h2 className="text-2xl mb-4">{productDetails.productName}</h2><hr style={{ width: '85%' }} /><br></br>
+              <p className="text-gray-600 mb-4">{productDetails.productDescription}</p><hr style={{ width: '85%' }} /><br></br>
+
+              <p className="text-lg font-bold ">Ksh {productDetails.price}</p><br></br>
+              <p className="text-gray-600">Availability: {productDetails.availability} in stock</p>
+
+              <button
+                onClick={addToCart}
+                className={`bg-[var(--primary-pink)] text-white p-2 rounded mt-[65px] w-[85%] hover:bg-[var(--primary-blue)] ${successStatus[productDetails.id] ? 'bg-blue-500' : ''}`}
+              >
+                {successStatus[productDetails.id] ? 'Added ✔' : 'Add to Cart'}
+              </button>
             </div>
-            <button
-              onClick={addToCart}
-              className={`bg-[var(--primary-pink)] text-white p-2 rounded ${successStatus[productDetails.id] ? 'bg-blue-500' : ''}`}
-            >
-              {successStatus[productDetails.id] ? 'Added ✔' : 'Add to Cart'}
-            </button>
+          </div>
+          <div className='bg-white w-[428px] m mt-8 rounded'>
+            <h1>Right</h1>
           </div>
         </div>
       ) : (
         <p>Loading product details...</p>
       )}
+
     </div>
   );
 };

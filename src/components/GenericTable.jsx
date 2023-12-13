@@ -25,7 +25,7 @@ const GenericTable = ({ data, columns, onEdit, onDelete }) => {
 
   return (
     <div className="table-container overflow-y-auto h-screen">
-      <table className="table border-collapse border border-gray-300 bg-gray-800 text-white">
+      <table className="table border-collapse border border-gray-300 bg-gray-800 text-white rounded">
         <thead>
           <tr>
             {columns.map((column, index) => (
