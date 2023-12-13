@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaCartPlus } from "react-icons/fa6";
 
 const Navbar = () => {
@@ -7,6 +7,7 @@ const Navbar = () => {
   const [userMenuVisible, setUserMenuVisible] = useState(false);
   const location = useLocation();
   const [activeMenu, setActiveMenu] = useState("home"); // Default active menu
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Assuming you have a way to fetch the username, replace the placeholder logic
@@ -29,8 +30,16 @@ const Navbar = () => {
     setUserMenuVisible(!userMenuVisible);
   };
 
+  const handleLogout = () => {
+    // Clear the authentication token from localStorage or sessionStorage
+    localStorage.removeItem("token");
+
+    // Redirect to the login page (adjust the path as needed)
+    navigate("/");
+  };
+
   return (
-    <div className="flex justify-between bg-gray-100 rounded-md p-4 sticky top-0 z-50 ml-[40px] mr-[40px]" >
+    <div className="flex justify-between bg-gray-100 rounded-md p-4 sticky top-0 z-50 ml-[40px] mr-[40px]">
       <div className="mt-1 ml-4">
         <h2 className="text-6xl font-bold">
           <Link
@@ -84,26 +93,22 @@ const Navbar = () => {
 
         <div
           className="relative user-container"
-          onMouseEnter={toggleUserMenu}
-          onMouseLeave={toggleUserMenu}
+          onClick={toggleUserMenu} // Handle the click event on the user container
         >
           <div className="user-initials bg-[var(--primary-blue)] text-white text-xl w-8 h-8 rounded-full flex items-center justify-center cursor-pointer">
             {getInitials(username)}
           </div>
           {userMenuVisible && (
             <div className="user-menu absolute top-10 right-0 bg-gray-100 shadow-md p-2">
-              <Link
-                to="/profile"
-                className="text-[var(--primary-blue)] text-sm block mb-2"
-              >
+              <Link to="/profile" className="text-[var(--primary-blue)] text-sm block mb-2">
                 Profile
               </Link>
-              <Link
-                to="#"
+              <button
+                onClick={handleLogout}
                 className="text-[var(--primary-blue)] text-sm block mb-2"
               >
                 Logout
-              </Link>
+              </button>
             </div>
           )}
         </div>

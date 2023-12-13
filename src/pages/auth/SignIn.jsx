@@ -1,17 +1,60 @@
-import React, {useState} from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import RotatingContainer from "../../components/RotatingContainer";
 
 const SignIn = () => {
   const [rotate, setRotate] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const toggleRotation = () => {
     setRotate(!rotate);
   };
 
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch("http://localhost:8080/ecommerce/rest/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const token = data.token;
+        localStorage.setItem("token", token);
+        if (data.user.userType === "NORMAL_USER") {
+          navigate("/home");
+        } else {
+          navigate("/stats");
+        }
+
+      } else {
+
+        console.error("Login error:", response.status, response.statusText);
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.includes("application/json")) {
+          const data = await response.json();
+          setError(data.message || "Invalid username or password");
+        } else {
+          setError("Invalid username or password");
+        }
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      setError("An error occurred during login");
+    }
+  };
+
+
   return (
     <RotatingContainer rotate={rotate}>
-  
       <div className="absolute inset-0 bg-opacity-50 backdrop-filter backdrop-blur-[2px] flex items-center justify-center">
         <div className="container bg-white p-8 rounded-md w-full md:w-1/2 lg:w-1/3 sm:w-2/3">
           <h2 className="text-4xl font-bold mb-4 text-[var(--primary-blue)] text-[30px] text-center mt-[20px]">
@@ -26,7 +69,7 @@ const SignIn = () => {
           <h3 className="text-gray-500 mb-6 text-center text-[17px] font-bold">
             Please Login
           </h3>
-          <form action="./login" method="post">
+          <form onSubmit={handleLogin}>
             <label htmlFor="username" className="text-sm block">
               Username
             </label>
@@ -36,6 +79,8 @@ const SignIn = () => {
               name="username"
               placeholder="kwach"
               required
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               className="input border-t-2 border-l-2 border-r border-b border-gray-500 focus:border-[var(--primary-blue)] rounded-md w-full px-4 py-2"
             />
 
@@ -48,6 +93,8 @@ const SignIn = () => {
               name="password"
               placeholder="  *****"
               required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className="input border-t-2 border-l-2 border-r border-b border-gray-500 focus:border-[var(--primary-blue)] rounded-md w-full px-4 py-2"
             />
 
@@ -63,6 +110,7 @@ const SignIn = () => {
             >
               Login
             </button>
+            {error && <p className="text-red-500 text-center mt-4">{error}</p>}
             <h5 className="mt-4 text-gray-500 text-center">
               Don't have an account?{" "}
               <Link to="/signup" onClick={toggleRotation} className="text-[var(--primary-blue)]">
@@ -72,8 +120,7 @@ const SignIn = () => {
           </form>
         </div>
       </div>
-    
-      </RotatingContainer>
+    </RotatingContainer>
   );
 };
 

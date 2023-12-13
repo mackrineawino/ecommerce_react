@@ -1,7 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const AdminNavBar = ({ children }) => {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    
+    localStorage.removeItem("token");
+
+  
+    navigate("/");
+  };
   return (
     <div className="flex h-screen overflow-hidden">
       <div className="flex flex-col w-64 bg-gray-800 p-6 text-center">
@@ -49,12 +58,12 @@ const AdminNavBar = ({ children }) => {
             </Link>
           </li>
           <li>
-            <Link
-              to="#"
-              className="text-white block hover:bg-gray-700 px-4 py-3"
+            <button
+              onClick={handleLogout}
+              className="text-white block hover:bg-gray-700 ml-[70px] py-3"
             >
               LOGOUT
-            </Link>
+            </button>
           </li>
         </ul>
       </div>
