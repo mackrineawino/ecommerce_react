@@ -1,3 +1,4 @@
+// ItemCart.jsx
 import React, { useState, useEffect } from "react";
 import CartTable from "../../components/CartTable";
 import Nav from "./NavBar";
@@ -5,14 +6,19 @@ import { FaCartPlus } from "react-icons/fa6";
 
 const ItemCart = () => {
   const [cartItems, setCartItems] = useState([]);
+  const token = "Bearer " + localStorage.getItem('token');
 
   useEffect(() => {
     // Fetch data when the component mounts
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:8080/ecommerce/rest/cartItems/list"
-        );
+        const response = await fetch("/ecommerce/rest/cartItems/list", {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token,
+          },
+        });
         const data = await response.json();
         setCartItems(data);
       } catch (error) {
@@ -21,12 +27,27 @@ const ItemCart = () => {
     };
 
     fetchData();
-  }, []);
-  const handleRemove = (item) => {
+  }, [token]);
 
-    console.log("Remove item:", item);
+  const handleRemove = async (item) => {
+    try {
+      const response = await fetch(`/ecommerce/rest/cartItems/delete/${item.id}`, {
+        method: "DELETE",
+        headers: {
+          'Authorization': token,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to remove item from the cart");
+      }
+
+      // Update the cart items list by filtering out the removed item
+      setCartItems((prevCartItems) => prevCartItems.filter(cartItem => cartItem.id !== item.id));
+    } catch (error) {
+      console.error("Error removing item:", error);
+    }
   };
-
 
   const total = cartItems.reduce(
     (accumulator, currentItem) => accumulator + currentItem.price,
@@ -52,7 +73,6 @@ const ItemCart = () => {
             </a>
           </div>
         </div>
-
       )}
     </div>
   );

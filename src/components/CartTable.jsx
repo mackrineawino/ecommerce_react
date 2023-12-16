@@ -1,25 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
+import { ImSpinner9 } from "react-icons/im";
 
 const CartTable = ({ cartItems, onRemove, total }) => {
+  const [loading, setLoading] = useState(false);
+
   const handleRemove = (item) => {
-    // Make a DELETE request to remove the item
-    fetch(`http://localhost:8080/ecommerce/rest/cartItems/delete/${item.id}`, {
-      method: "DELETE",
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to remove item from the cart");
-        }
-        // Call the onRemove callback to update the state in your parent component
-        onRemove(item);
-        // Reload the page
-        window.location.reload();
-      })
-      .catch((error) => {
-        console.error("Error removing item:", error);
-      });
+    // Set loading to true when starting the removal process
+    setLoading(true);
+
+    // Call the onRemove callback to update the state in the parent component (ItemCart)
+    onRemove(item);
+    setLoading(false); // Set loading back to false (not in finally block as we are handling it in the parent component)
   };
-  
 
   return (
     <div className="flex mt-[15px]">
@@ -45,8 +37,13 @@ const CartTable = ({ cartItems, onRemove, total }) => {
             <button
               onClick={() => handleRemove(item)}
               className="bg-[var(--primary-pink)] text-white px-4 py-2 rounded hover:bg-[var(--primary-blue)] h-10"
+              disabled={loading} // Disable the button when loading
             >
-              Remove
+              {loading ? (
+                <ImSpinner9 className="animate-spin inline-block mr-2" />
+              ) : (
+                'Remove'
+              )}
             </button>
           </div>
         ))}
@@ -57,7 +54,6 @@ const CartTable = ({ cartItems, onRemove, total }) => {
         <h1 className="text-lg font-semibold mb-2 text-center">CART SUMMARY</h1>
         <div className="flex justify-between">
           <h2 className="text-lg font-semibold mb-2">Totals</h2>
-
           <h3> KSh. {total}</h3>
         </div>
         <div className="text-center bg-[var(--primary-pink)] h-[130px]">
@@ -65,8 +61,12 @@ const CartTable = ({ cartItems, onRemove, total }) => {
         </div>
 
         <div className="mt-[2px]">
-          <button className="bg-[var(--primary-pink)] px-4 py-2 text-white rounded w-full hover:bg-[var(--primary-blue)] ">
-            CHECKOUT (KES {total})
+          <button className="bg-[var(--primary-pink)] px-4 py-2 text-white rounded w-full hover:bg-[var(--primary-blue)]  disabled={loading} ">
+            {loading ? (
+              <ImSpinner9 className="animate-spin inline-block mr-2" />
+            ) : (
+              `CHECKOUT (KES ${total})`
+            )}
           </button>
         </div>
       </div>

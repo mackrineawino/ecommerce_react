@@ -8,12 +8,17 @@ import GenericTable from '../../components/GenericTable';
 
 const ViewUsers = () => {
   const [customers, setCustomers] = useState([]);
-
+  const token = "Bearer " + localStorage.getItem('token');
   useEffect(() => {
     // Fetch data from the backend API when the component mounts
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/ecommerce/rest/users/list');
+        const response = await axios.get('/ecommerce/rest/auth/list', {
+          method: 'GET',
+          headers: {
+            'Authorization': token,
+          },
+        });
         setCustomers(response.data);
       } catch (error) {
         console.error('Error fetching users:', error);
@@ -21,24 +26,30 @@ const ViewUsers = () => {
     };
 
     fetchData();
-  }, []); // Empty dependency array ensures the effect runs only once on mount
+  }, [token]); // Empty dependency array ensures the effect runs only once on mount
 
-  const columns = ["id", "imageUrl", "productName", "price", "availability", "productDescription", "category"];
+  const columns = ["id", "username", "email", "userType"];
 
   const handleEdit = (item) => {
     // Implement your edit logic here
     console.log("Edit item:", item);
   };
 
-  const handleDelete = async (itemId) => {
+  const handleDelete = async (userid) => {
     try {
       // Make a DELETE request to the backend endpoint
-      await axios.delete(`http://localhost:8080/ecommerce/rest/users/delete/${itemId}`);
+      await axios.delete(`/ecommerce/rest/auth/delete/${userid}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': token,
+        },
+      });
+
 
       // Remove the deleted item from the local state
-      setCustomers((prevProducts) => prevProducts.filter((customer) => customer.id !== itemId));
+      setCustomers((prevUser) => prevUser.filter((customer) => customer.id !== userid));
       
-      console.log(`User with id ${itemId} deleted successfully.`);
+      console.log(`User with id ${userid} deleted successfully.`);
     } catch (error) {
       console.error('Error deleting product:', error);
     }

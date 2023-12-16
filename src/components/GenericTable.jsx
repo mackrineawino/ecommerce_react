@@ -75,7 +75,7 @@ const GenericTable = ({ data, columns, onEdit, onDelete }) => {
       {showModal && (
         <div className="fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-50">
           <div className="modal-content bg-blue-200 p-8 rounded-md shadow-md w-[500px]">
-            <p className="mb-[20px]">Continue to delete this item? This action is irreversible.</p>
+            <p className="mb-[20px]">Continue to delete? This action is irreversible.</p>
             <button onClick={handleConfirmDelete} className="bg-pink-500 text-white px-4 py-2 rounded  ">
               Yes
             </button>

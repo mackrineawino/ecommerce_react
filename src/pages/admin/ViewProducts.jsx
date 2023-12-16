@@ -7,19 +7,33 @@ import GenericTable from "../../components/GenericTable";
 
 const ViewProducts = () => {
   const [products, setProducts] = useState([]);
+  const token = "Bearer " + localStorage.getItem('token');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/ecommerce/rest/products/list');
-        setProducts(response.data);
+        const response = await fetch('/ecommerce/rest/products/list', {
+          method: 'GET',
+          headers: {
+            'Authorization': token,
+            'Content-Type': 'application/json',
+          },
+        });
+  
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+  
+        const data = await response.json(); // Parse JSON here
+        setProducts(data);
       } catch (error) {
         console.error('Error fetching products:', error);
       }
     };
-
+  
     fetchData();
-  }, []);
+  }, [token]);
+  
 
   const columns = ["id", "imageUrl", "productName", "price", "availability", "productDescription", "category"];
 
@@ -29,7 +43,12 @@ const ViewProducts = () => {
 
   const handleDelete = async (itemId) => {
     try {
-      await axios.delete(`http://localhost:8080/ecommerce/rest/products/delete/${itemId}`);
+      await axios.delete(`/ecommerce/rest/products/delete/${itemId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': token,
+        },
+      });
       setProducts((prevProducts) => prevProducts.filter((product) => product.id !== itemId));
       console.log(`Item with id ${itemId} deleted successfully.`);
     } catch (error) {

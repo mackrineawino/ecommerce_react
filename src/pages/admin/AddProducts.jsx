@@ -11,7 +11,7 @@ const AddProducts = () => {
     productDescription: '',
     category: 'DEFAULT_CATEGORY', // Set a default category value
   });
-
+  const token = "Bearer " + localStorage.getItem('token');
   const [successMessage, setSuccessMessage] = useState(null);
   const [priceError, setPriceError] = useState(null);
   const [availabilityError, setAvailabilityError] = useState(null);
@@ -47,7 +47,15 @@ const AddProducts = () => {
       }
 
       // Make a POST request to the backend API
-      const response = await axios.post('http://localhost:8080/ecommerce/rest/products/add', formData);
+      const response = await axios.post('/ecommerce/rest/products/add', formData , {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          
+            'Authorization': token,
+          
+        },
+      });
 
       // Handle the response as needed
       console.log('Product added successfully:', response.data);

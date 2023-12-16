@@ -8,18 +8,64 @@ const Navbar = () => {
   const location = useLocation();
   const [activeMenu, setActiveMenu] = useState("home"); // Default active menu
   const navigate = useNavigate();
-
-  useEffect(() => {
-    // Assuming you have a way to fetch the username, replace the placeholder logic
-    const fetchedUsername = "JohnDoe";
-    setUsername(fetchedUsername);
-  }, []);
+  const token = "Bearer " + localStorage.getItem("token");
+  // State to track the number of items in the cart
+  const [cartItemCount, setCartItemCount] = useState(0);
 
   useEffect(() => {
     // Extract the current path from the location object and set the active menu accordingly
     const currentPath = location.pathname.substring(1); // Remove leading '/'
     setActiveMenu(currentPath || "home");
+
+    // Extract the username from localStorage
+    const storedUsername = localStorage.getItem("username");
+    if (storedUsername) {
+      setUsername(storedUsername);
+    }
+
+    // Fetch cart items count or any other logic to determine the count
+    fetchData();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
+
+  // Fetch cart items count
+  const fetchData = async () => {
+    try {
+      const response = await fetch("/ecommerce/rest/cartItems/list", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      });
+      const cartItems = await response.json();
+
+      // Assuming the API returns an array of cart items
+      setCartItemCount(cartItems.length);
+    } catch (error) {
+      console.error("Error fetching cart items:", error);
+    }
+  };
+
+  // Function to handle removing an item from the cart
+  const handleRemoveFromCart = async (itemId) => {
+    try {
+      // Make the API call to remove the item from the cart
+      await fetch(`/ecommerce/rest/cartItems/remove/${itemId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      });
+
+      // After successful removal, fetch the updated cart item count
+      fetchData();
+    } catch (error) {
+      console.error("Error removing item from cart:", error);
+    }
+  };
 
   const getInitials = (name) => {
     const names = name.split(" ");
@@ -31,8 +77,9 @@ const Navbar = () => {
   };
 
   const handleLogout = () => {
-    // Clear the authentication token from localStorage or sessionStorage
+    // Clear the authentication token and username from localStorage
     localStorage.removeItem("token");
+    localStorage.removeItem("username");
 
     // Redirect to the login page (adjust the path as needed)
     navigate("/");
@@ -85,10 +132,12 @@ const Navbar = () => {
 
       <div className="flex items-center space-x-6">
         <Link to="/cart" className="relative">
-          <FaCartPlus className="text-[30px] text-[#49A3C8] cursor-pointer " />
-          <span className="absolute top-[-10px] right-[-19px] bg-[#E0588E] text-white rounded-full px-2 py-1 text-xs">
-            0
-          </span>
+          <FaCartPlus className="text-[30px] text-[#49A3C8] cursor-pointer" />
+          {cartItemCount > 0 && (
+            <span className="absolute top-[-10px] right-[-19px] bg-[#E0588E] text-white rounded-full px-2 py-1 text-xs">
+              {cartItemCount}
+            </span>
+          )}
         </Link>
 
         <div
@@ -100,7 +149,10 @@ const Navbar = () => {
           </div>
           {userMenuVisible && (
             <div className="user-menu absolute top-10 right-0 bg-gray-100 shadow-md p-2">
-              <Link to="/profile" className="text-[var(--primary-blue)] text-sm block mb-2">
+              <Link
+                to="/profile"
+                className="text-[var(--primary-blue)] text-sm block mb-2"
+              >
                 Profile
               </Link>
               <button

@@ -1,14 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import AdminNav from './AdminNavBar';
 
-const AdminHome = ({ totalUsers = 100, totalOrders = 50, totalCategories = 9 }) => {
+const AdminHome = ({ totalCategories = 9 }) => {
   const [totalProducts, setTotalProducts] = useState(0);
+  const [totalUsers, setTotalUsers] = useState(0);
+  const [totalOrders, setTotalOrders] = useState(0);
+  const token = "Bearer " + localStorage.getItem('token');
 
   useEffect(() => {
     // Fetch totalProducts data when the component mounts
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:8080/ecommerce/rest/products/list');
+        const response = await fetch('/ecommerce/rest/products/list' , {
+            method: 'GET',
+            headers: {
+              'Authorization': token,
+              'Content-Type': 'application/json',
+            },
+          });
         const data = await response.json();
         setTotalProducts(data.length);
       } catch (error) {
@@ -17,7 +26,48 @@ const AdminHome = ({ totalUsers = 100, totalOrders = 50, totalCategories = 9 }) 
     };
 
     fetchData();
-  }, []); // The empty dependency array ensures that this effect runs once when the component mounts
+  }, [token]);
+  useEffect(() => {
+    // Fetch totalProducts data when the component mounts
+    const fetchData = async () => {
+      try {
+        const response = await fetch('/ecommerce/rest/auth/list' , {
+            method: 'GET',
+            headers: {
+              'Authorization': token,
+              'Content-Type': 'application/json',
+            },
+          });
+        const data = await response.json();
+        setTotalUsers(data.length);
+      } catch (error) {
+        console.error('Error fetching totalProducts:', error);
+      }
+    };
+
+    fetchData();
+  }, [token]); 
+  useEffect(() => {
+    // Fetch totalProducts data when the component mounts
+    const fetchData = async () => {
+      try {
+        const response = await fetch('/ecommerce/rest/orders/list' , {
+            method: 'GET',
+            headers: {
+              'Authorization': token,
+              'Content-Type': 'application/json',
+            },
+          });
+        const data = await response.json();
+        setTotalOrders(data.length);
+
+      } catch (error) {
+        console.error('Error fetching totalProducts:', error);
+      }
+    };
+
+    fetchData();
+  }, [token]); 
 
   return (
     <div className="h-screen">

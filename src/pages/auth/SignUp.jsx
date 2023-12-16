@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import RotatingContainer from "../../components/RotatingContainer";
+import { ImSpinner9 } from "react-icons/im";
 
 const SignUp = () => {
   const [rotate, setRotate] = useState(false);
@@ -10,6 +11,8 @@ const SignUp = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [userType, setUserType] = useState("NORMAL_USER"); // Default to NORMAL_USER
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState(""); // New state variable
 
   const toggleRotation = () => {
     setRotate(!rotate);
@@ -17,9 +20,12 @@ const SignUp = () => {
 
   const handleSignup = async (e) => {
     e.preventDefault();
-
+    if (password !== confirmPassword) {
+      setError("Password and Confirm Password fields do not match");
+      return;
+    }
     try {
-      const response = await fetch("http://localhost:8080/ecommerce/rest/auth/add", {
+      const response = await fetch("/ecommerce/rest/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -32,20 +38,39 @@ const SignUp = () => {
           userType,
         }),
       });
-
+  
       if (response.ok) {
-        // Registration successful, you may want to redirect the user or show a success message
+        // Registration successful, clear errors, update success message
+        setError("");
+        setSuccessMessage("User registered successfully. Proceed to login.");
+        // You may want to redirect the user or show a success message
         console.log("Registration successful");
       } else {
-        // Registration failed, handle the error (show an error message, etc.)
+        // Registration failed, handle the error
         const data = await response.json();
-        setError(data.message || "Registration failed");
+        if (response.status === 500) {
+          // Check if the error is due to username or email already existing
+          const { message } = data;
+          if (message.includes("username")) {
+            setError("Username already exists");
+          } else if (message.includes("email")) {
+            setError("Email already exists");
+          } else {
+            setError("Username or Email already exists");
+          }
+        } else {
+          setError(data.message || "Registration failed");
+        }
       }
     } catch (error) {
       console.error("Error during registration:", error);
       setError("An error occurred during registration");
+      setSuccessMessage(""); // Clear success message on error
+    } finally {
+      setLoading(false);
     }
   };
+  
 
   return (
     <RotatingContainer rotate={rotate}>
@@ -63,6 +88,10 @@ const SignUp = () => {
           <h3 className="text-gray-500 mb-6 text-center text-[17px] font-bold">
             Please SignUp
           </h3>
+          {error && <p className="text-red-500 text-center mt-4">{error}</p>}
+        {successMessage && (
+          <p className="text-green-500 text-center mt-4">{successMessage}</p>
+        )}
           <form onSubmit={handleSignup}>
             <label htmlFor="username" className="text-sm">
               Username
@@ -150,10 +179,14 @@ const SignUp = () => {
             <button
               type="submit"
               className="w-full mt-4 bg-[var(--primary-blue)] text-white py-3 px-4 border-none cursor-pointer rounded-md text-base hover:bg-[var(--primary-pink)]"
+              disabled={loading}
             >
-              Signup
+              {loading ? (
+                <ImSpinner9 className="animate-spin inline-block mr-2" />
+              ) : (
+                'Signup'
+              )}
             </button>
-            {error && <p className="text-red-500 text-center mt-4">{error}</p>}
             <h5 className="mt-4 text-center">
               <span className="mt-4 text-gray-500 text-center">
                 Already have an account?

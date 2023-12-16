@@ -7,10 +7,18 @@ const ProductDetails = () => {
   const [productDetails, setProductDetails] = useState(null);
   const [successStatus, setSuccessStatus] = useState({});
 
+  const token = "Bearer " + localStorage.getItem('token');
+  console.log('Authorization token:', token);
+
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/ecommerce/rest/products/list/${id}`);
+        const response = await fetch(`/ecommerce/rest/products/list/${id}`, {
+          method: 'GET',
+          headers: {
+            'Authorization': token,
+          },
+        });
         const data = await response.json();
         console.log('Product Details:', data);
 
@@ -24,7 +32,7 @@ const ProductDetails = () => {
     };
 
     fetchProductDetails();
-  }, [id]);
+  }, [id, token]);
 
   const addToCart = () => {
     // Check if productDetails is not null before trying to add to cart
@@ -39,10 +47,13 @@ const ProductDetails = () => {
         order: null,
       };
 
-      fetch('http://localhost:8080/ecommerce/rest/cartItems/add', {
+      fetch('/ecommerce/rest/cartItems/add', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          
+            'Authorization': token,
+          
         },
         body: JSON.stringify(data),
       })

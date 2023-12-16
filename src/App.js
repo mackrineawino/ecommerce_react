@@ -16,25 +16,26 @@ import ViewProducts from "./pages/admin/ViewProducts";
 import ItemCart from "./pages/customer/ItemCart";
 
 function App() {
+  const isAuthenticated = !!localStorage.getItem('token');
   return (
     <div className="App">
       <Router>
         <Routes>
           <Route path="/" element={<SignIn />} />
-          <Route path="/home" element={<Home />} />
+          <Route path="/home" element={isAuthenticated? (<Home />):(<SignIn />)} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/orders" element={<Orders />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/productDetails/:id" element={<ProductsDetails />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/stats" element={<AdminHome />} />
-          <Route path="/addproducts" element={<AddProducts />} />
+          <Route path="/orders" element={isAuthenticated?(<Orders />): (<SignIn />) } />
+          <Route path="/cart" element={isAuthenticated?(<Cart />): (<SignIn />)} />
+          <Route path="/productDetails/:id" element={isAuthenticated? (<ProductsDetails />):(<SignIn />)} />
+          <Route path="/profile" element={isAuthenticated?(<Profile />): (<SignIn />)} />
+          <Route path="/stats" element={isAuthenticated?(<AdminHome />): (<SignIn />)} />
+          <Route path="/addproducts" element={isAuthenticated?(<AddProducts />): (<SignIn />)} />
           <Route path="/adminnav" element={<AdminNav />} />
-          <Route path="/viewusers" element={<Users />} />
-          <Route path="/vieworders" element={<ViewOrders />} />
-          <Route path="/viewproducts" element={<ViewProducts />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/cart" element={<ItemCart />} />
+          <Route path="/viewusers" element={isAuthenticated?(<Users />): (<SignIn />)} />
+          <Route path="/vieworders" element={isAuthenticated?(<ViewOrders />): (<SignIn />)} />
+          <Route path="/viewproducts" element={isAuthenticated?(<ViewProducts />): (<SignIn />) } />
+          <Route path="/about" element={isAuthenticated?(<About />): (<SignIn />)} />
+          <Route path="/cart" element={isAuthenticated?(<ItemCart />): (<SignIn />) } />
         </Routes>
       </Router>
     </div>

@@ -6,12 +6,19 @@ import { IoMdArchive } from 'react-icons/io';
 
 const ViewOrders = () => {
   const [orders, setOrders] = useState([]);
+  const token = "Bearer " + localStorage.getItem('token');
 
   useEffect(() => {
     // Fetch data from the backend API when the component mounts
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/ecommerce/rest/orders/list');
+        const response = await axios.get('/ecommerce/rest/orders/list', {
+          method: 'GET',
+          headers: {
+            'Authorization': token,
+            'Content-Type': 'application/json',
+          },
+        });
         setOrders(response.data);
       } catch (error) {
         console.error('Error fetching products:', error);
@@ -19,7 +26,7 @@ const ViewOrders = () => {
     };
 
     fetchData();
-  }, []); // Empty dependency array ensures the effect runs only once on mount
+  }, [token]); // Empty dependency array ensures the effect runs only once on mount
 
   const columns = ["id", "imageUrl", "productName", "price", "availability", "productDescription", "category"];
 
@@ -31,7 +38,11 @@ const ViewOrders = () => {
   const handleDelete = async (itemId) => {
     try {
       // Make a DELETE request to the backend endpoint
-      await axios.delete(`http://localhost:8080/ecommerce/rest/orders/delete/${itemId}`);
+      await axios.delete(`/ecommerce/rest/orders/delete/${itemId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': token,
+        },});
 
       // Remove the deleted item from the local state
       setOrders((prevOrders) => prevOrders.filter((order) => order.id !== itemId));

@@ -4,11 +4,19 @@ import Nav from "./NavBar";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
+  const token = "Bearer " + localStorage.getItem('token');
+  console.log('Authorization token:', token);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:8080/ecommerce/rest/orders/list');
+        const response = await fetch('/ecommerce/rest/orders/list', {
+          method: 'GET',
+          headers: {
+            'Authorization': token,
+          },
+          
+        });
         const data = await response.json();
         setOrders(data);
       } catch (error) {
@@ -17,7 +25,7 @@ const Orders = () => {
     };
 
     fetchData();
-  }, []);
+  }, [token]);
 
   return (
     <div>

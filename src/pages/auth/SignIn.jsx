@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import RotatingContainer from "../../components/RotatingContainer";
+import { ImSpinner9 } from "react-icons/im";
+
 
 const SignIn = () => {
   const [rotate, setRotate] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const toggleRotation = () => {
@@ -17,7 +20,8 @@ const SignIn = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:8080/ecommerce/rest/auth/login", {
+      setLoading(true);
+      const response = await fetch("/ecommerce/rest/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -28,15 +32,15 @@ const SignIn = () => {
       if (response.ok) {
         const data = await response.json();
         const token = data.token;
+        const username= data.user.username;
         localStorage.setItem("token", token);
+        localStorage.setItem("username", username);
         if (data.user.userType === "NORMAL_USER") {
           navigate("/home");
         } else {
           navigate("/stats");
         }
-
       } else {
-
         console.error("Login error:", response.status, response.statusText);
         const contentType = response.headers.get("content-type");
         if (contentType && contentType.includes("application/json")) {
@@ -49,6 +53,8 @@ const SignIn = () => {
     } catch (error) {
       console.error("Login error:", error);
       setError("An error occurred during login");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -107,8 +113,14 @@ const SignIn = () => {
             <button
               type="submit"
               className="w-full mt-4 bg-[var(--primary-blue)] text-white py-3 px-4 border-none cursor-pointer rounded-md text-base hover:bg-[var(--primary-pink)]"
+              disabled={loading}
             >
-              Login
+              {loading ? (
+                <ImSpinner9 className="animate-spin inline-block mr-2" />
+              ) : (
+                'Login'
+              )}
+
             </button>
             {error && <p className="text-red-500 text-center mt-4">{error}</p>}
             <h5 className="mt-4 text-gray-500 text-center">
