@@ -65,7 +65,7 @@ const ViewOrders = () => {
         </div>
       ) : (
         <div className="flex flex-col items-center">
-          <h2>Orders Table</h2>
+          <h2 className="mb-5 text-[30px]">Orders List</h2>
           <GenericTable data={orders} columns={columns} onEdit={handleEdit} onDelete={handleDelete} />
         </div>
       )

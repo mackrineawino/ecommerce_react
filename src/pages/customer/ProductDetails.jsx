@@ -107,7 +107,7 @@ const ProductDetails = () => {
 
       {productDetails ? (
         <div className='flex'>
-          <div className=" mt-8 flex ml-[40px] bg-white rounded mr-[40px] w-[60%] ">
+          <div className=" mt-8 flex ml-[40px] bg-gray-100 rounded mr-[40px] w-[60%] ">
           
             {/* Image on the left */}
             {productDetails.imageUrl && (
@@ -115,7 +115,7 @@ const ProductDetails = () => {
             )}
 
             {/* Product details on the right */}
-            <div className="ml-[40px] mt-[60px] bg-white w-[400px] h-[">
+            <div className="ml-[40px] mt-[60px] bbg-gray-100 w-[400px] h-[">
               <h2 className="text-2xl mb-4">{productDetails.productName}</h2><hr style={{ width: '85%' }} /><br></br>
               <p className="text-gray-600 mb-4">{productDetails.productDescription}</p><hr style={{ width: '85%' }} /><br></br>
 
@@ -134,7 +134,7 @@ const ProductDetails = () => {
               </button>
             </div>
           </div>
-          <div className='bg-white w-[428px] m mt-8 rounded'>
+          <div className='bg-gray-100 w-[428px] m mt-8 rounded'>
             <h1>Right</h1>
           </div>
         </div>

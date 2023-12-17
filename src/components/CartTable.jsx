@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { ImSpinner9 } from "react-icons/im";
 import { loadStripe } from "@stripe/stripe-js";
+import useForceUpdate  from 'use-force-update';
+
 
 const CartTable = ({ cartItems, onAddMore, onReduceQuantity, onRemove }) => {
   const [removeLoading, setRemoveLoading] = useState(false);
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [stripe, setStripe] = useState(null);
+  const forceUpdate = useForceUpdate();
+
   const token = "Bearer " + localStorage.getItem('token');
 
   useEffect(() => {
@@ -30,6 +34,7 @@ const CartTable = ({ cartItems, onAddMore, onReduceQuantity, onRemove }) => {
   const handleAddMore = async (item) => {
     try {
       await onAddMore(item);
+      forceUpdate();
     } catch (error) {
       console.error('Error adding more quantity:', error);
     }
@@ -37,6 +42,7 @@ const CartTable = ({ cartItems, onAddMore, onReduceQuantity, onRemove }) => {
   const handleReduceQuantity = async (item) => {
     try {
       await onReduceQuantity(item);
+      forceUpdate();
     } catch (error) {
       console.error('Error adding more quantity:', error);
     }
@@ -92,7 +98,7 @@ const CartTable = ({ cartItems, onAddMore, onReduceQuantity, onRemove }) => {
   return (
     <div className="flex mt-[15px]">
       {/* Cart Items */}
-      <div className="flex flex-col gap-4 ml-[40px] w-[70%] bg-white">
+      <div className="flex flex-col gap-4 ml-[40px] w-[70%] bg-gray-100">
         <h2 className="text-center text-[20px] mt-[8px]">Cart</h2>
         <hr />
         {cartItems.map((item) => (
@@ -112,9 +118,9 @@ const CartTable = ({ cartItems, onAddMore, onReduceQuantity, onRemove }) => {
 
             <p className="text-gray-600 mb-2"> {item.quantity} Units</p>
             {/* ... */}
-            <p className="text-gray-600 mb-2 text-[40px]">
+            <p className="text-gray-600 mb-2 text-[40px] text-center">
               <span
-                className={`inline-block w-[35px] h-[35px] bg-[var(--primary-pink)] hover:bg-[var(--primary-blue)] text-white rounded-full text-center leading-6 cursor-pointer ${item.quantity === 1 ? 'cursor-not-allowed opacity-50' : ''
+                className={`inline-block w-[35px] h-[35px] bg-[var(--primary-pink)] hover:bg-[var(--primary-blue)] text-white rounded-full text-[35px] leading-[35px] cursor-pointer ${item.quantity === 1 ? 'cursor-not-allowed opacity-50' : ''
                   }`}
                 onClick={() => handleReduceQuantity(item)}
                 disabled={item.quantity === 1}
@@ -124,9 +130,11 @@ const CartTable = ({ cartItems, onAddMore, onReduceQuantity, onRemove }) => {
             </p>
             {/* ... */}
 
-            <p className="text-gray-600 mb-2 text-[40px]">
-              <span className="inline-block w-[35px] h-[35px] bg-[var(--primary-pink)] hover:bg-[var(--primary-blue)] text-white rounded-full text-center leading-6 cursor-pointer" onClick={() => handleAddMore(item)}>+</span>
-            </p>
+            <p className="text-gray-600 mb-2 text-[40px] text-center">
+  <span className="inline-block w-[35px] h-[35px] bg-[var(--primary-pink)] hover:bg-[var(--primary-blue)] text-white rounded-full text-[35px] leading-[35px] cursor-pointer" onClick={() => handleAddMore(item)}>+</span>
+</p>
+
+
             <button
               onClick={() => handleRemove(item)}
               className="bg-[var(--primary-pink)] text-white px-4 py-2 rounded hover:bg-[var(--primary-blue)] h-10"
@@ -143,13 +151,13 @@ const CartTable = ({ cartItems, onAddMore, onReduceQuantity, onRemove }) => {
       </div>
 
       {/* Totals Card */}
-      <div className="bg-white w-[30%] p-4 rounded shadow-md mr-[40px] ml-[30px] h-[300px]">
+      <div className="bg-gray-100 w-[30%] p-4 rounded shadow-md mr-[40px] ml-[30px] h-[300px]">
         <h1 className="text-lg font-semibold mb-2 text-center">CART SUMMARY</h1>
         <div className="flex justify-between">
           <h2 className="text-lg font-semibold mb-2">Totals</h2>
           <h3> KSh. {calculateCartTotal()}</h3>
         </div>
-        <div className="text-center bg-[var(--primary-blue)] h-[130px]">
+        <div className="text-center bg-white h-[130px] mb-[10px] rounded">
           <h2>Delivery</h2>
         </div>
 

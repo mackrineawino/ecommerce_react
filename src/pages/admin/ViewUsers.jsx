@@ -27,8 +27,8 @@ const ViewUsers = () => {
 
     fetchData();
   }, [token]); // Empty dependency array ensures the effect runs only once on mount
-
-  const columns = ["id", "username", "email", "userType"];
+  const normalUsers = customers.filter((user) => user.userType === "NORMAL_USER");
+  const columns = ["id", "username", "email"];
 
   const handleEdit = (item) => {
     // Implement your edit logic here
@@ -67,8 +67,8 @@ const ViewUsers = () => {
         </div>
       ) :(
         <div className="flex flex-col items-center">
-        <h2>Users Table</h2>
-      <GenericTable data={customers} columns={columns} onEdit={handleEdit} onDelete={handleDelete}/>
+        <h2 className='mb-5 text-[30px]'>Customer List</h2>
+      <GenericTable data={normalUsers} columns={columns} onEdit={handleEdit} onDelete={handleDelete}/>
         </div>
       )}
     </AdminNav>

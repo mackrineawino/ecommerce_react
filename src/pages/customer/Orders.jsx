@@ -64,7 +64,7 @@ const Orders = () => {
       ) : (
         <div>
           {/* Render orders table when there are orders */}
-          <table className="table-auto bg-white mx-auto w-3/4 mt-5">
+          <table className="table-auto bg-gray-100 mx-auto w-3/4 mt-5">
             <tbody>
               <tr>
                 <th className="border px-4 py-2">Order Number</th>
