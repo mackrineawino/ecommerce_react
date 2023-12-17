@@ -80,6 +80,8 @@ const Navbar = () => {
     // Clear the authentication token and username from localStorage
     localStorage.removeItem("token");
     localStorage.removeItem("username");
+    localStorage.removeItem("email");
+
 
     // Redirect to the login page (adjust the path as needed)
     navigate("/");

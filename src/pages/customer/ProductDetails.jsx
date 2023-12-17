@@ -5,7 +5,10 @@ import Nav from './NavBar';
 const ProductDetails = () => {
   const { id } = useParams();
   const [productDetails, setProductDetails] = useState(null);
+  const [cartItems, setCartItems] = useState([]);
   const [successStatus, setSuccessStatus] = useState({});
+  const [availability, setAvailability] = useState(0);
+  const [cartErrorMessage, setCartErrorMessage] = useState('');
 
   const token = "Bearer " + localStorage.getItem('token');
   console.log('Authorization token:', token);
@@ -13,18 +16,31 @@ const ProductDetails = () => {
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
-        const response = await fetch(`/ecommerce/rest/products/list/${id}`, {
+        const productResponse = await fetch(`/ecommerce/rest/products/list/${id}`, {
           method: 'GET',
           headers: {
             'Authorization': token,
           },
         });
-        const data = await response.json();
-        console.log('Product Details:', data);
+        const productData = await productResponse.json();
+        console.log('Product Details:', productData);
 
-        // Assuming the API returns an array of products
-        if (Array.isArray(data) && data.length > 0) {
-          setProductDetails(data[0]); // Use the first product in the array
+        if (Array.isArray(productData) && productData.length > 0) {
+          setProductDetails(productData[0]);
+
+          // Fetch cart items to calculate availability
+          const cartResponse = await fetch('/ecommerce/rest/cartItems/list', {
+            method: 'GET',
+            headers: {
+              'Authorization': token,
+            },
+          });
+          const cartData = await cartResponse.json();
+          setCartItems(cartData);
+
+          // Calculate availability
+          const cartItem = cartData.find(item => item.id === productData[0].id);
+          setAvailability(cartItem ? productData[0].availability - cartItem.quantity : productData[0].availability);
         }
       } catch (error) {
         console.error('Error fetching product details:', error);
@@ -34,41 +50,54 @@ const ProductDetails = () => {
     fetchProductDetails();
   }, [id, token]);
 
-  const addToCart = () => {
-    // Check if productDetails is not null before trying to add to cart
-    if (productDetails) {
-      // Construct the data object with required fields
-      const data = {
-        id: productDetails.id,
-        imageUrl: productDetails.imageUrl,
-        productName: productDetails.productName,
-        category: productDetails.category,
-        price: productDetails.price,
-        order: null,
-      };
 
-      fetch('/ecommerce/rest/cartItems/add', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          
+  const addToCart = () => {
+    if (productDetails) {
+      // Check if the product is already in the cart based on productid
+      const cartItem = cartItems.find(item => item.productid === productDetails.id);
+
+      // Update availability based on the quantity in the cart
+      const updatedAvailability = cartItem ? productDetails.availability - cartItem.quantity : productDetails.availability;
+      setAvailability(updatedAvailability);
+
+      // Check if the product is already in the cart
+      if (cartItem) {
+        setCartErrorMessage('Product is already in the cart.');
+      } else if (cartItem && cartItem.quantity >= productDetails.availability) {
+        setCartErrorMessage('Product is already in the cart and not available.');
+      } else {
+        // Clear any previous error messages
+        setCartErrorMessage('');
+
+        // Add the product to the cart
+        fetch('/ecommerce/rest/cartItems/add', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
             'Authorization': token,
-          
-        },
-        body: JSON.stringify(data),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          // Handle the response as needed
-          console.log('Item added to cart:', data);
-          // Set success status for this product to true
-          setSuccessStatus((prevStatus) => ({ ...prevStatus, [productDetails.id]: true }));
-          // Clear the success status after a delay (e.g., 3 seconds)
-          setTimeout(() => setSuccessStatus((prevStatus) => ({ ...prevStatus, [productDetails.id]: false })), 3000);
+          },
+          body: JSON.stringify({
+            id: productDetails.id,
+            imageUrl: productDetails.imageUrl,
+            productName: productDetails.productName,
+            category: productDetails.category,
+            productid: productDetails.id,
+            price: productDetails.price,
+            order: null,
+          }),
         })
-        .catch((error) => {
-          console.error('Error adding item to cart:', error);
-        });
+          .then((response) => response.json())
+          .then((data) => {
+            // Handle the response as needed
+            console.log('Item added to cart:', data);
+            // Update the success status and reset after a delay
+            setSuccessStatus((prevStatus) => ({ ...prevStatus, [productDetails.id]: true }));
+            setTimeout(() => setSuccessStatus((prevStatus) => ({ ...prevStatus, [productDetails.id]: false })), 3000);
+          })
+          .catch((error) => {
+            console.error('Error adding item to cart:', error);
+          });
+      }
     }
   };
 
@@ -79,6 +108,7 @@ const ProductDetails = () => {
       {productDetails ? (
         <div className='flex'>
           <div className=" mt-8 flex ml-[40px] bg-white rounded mr-[40px] w-[60%] ">
+          
             {/* Image on the left */}
             {productDetails.imageUrl && (
               <img src={productDetails.imageUrl} alt={productDetails.productName} className="w-[400px] h-[400px] rounded p-[20px]" />
@@ -90,7 +120,11 @@ const ProductDetails = () => {
               <p className="text-gray-600 mb-4">{productDetails.productDescription}</p><hr style={{ width: '85%' }} /><br></br>
 
               <p className="text-lg font-bold ">Ksh {productDetails.price}</p><br></br>
-              <p className="text-gray-600">Availability: {productDetails.availability} in stock</p>
+              <p className="text-gray-600">Availability: {availability} in stock</p>
+
+              {cartErrorMessage && (
+                <p className="text-red-500">{cartErrorMessage}</p>
+              )}
 
               <button
                 onClick={addToCart}

@@ -20,6 +20,7 @@ const ViewOrders = () => {
           },
         });
         setOrders(response.data);
+        console.log(response.data)
       } catch (error) {
         console.error('Error fetching products:', error);
       }
@@ -28,26 +29,26 @@ const ViewOrders = () => {
     fetchData();
   }, [token]); // Empty dependency array ensures the effect runs only once on mount
 
-  const columns = ["id", "imageUrl", "productName", "price", "availability", "productDescription", "category"];
+  const columns = ["orderNumber", "totalAmount", "email", "status", "orderItems", ];
 
   const handleEdit = (item) => {
     // Implement your edit logic here
     console.log("Edit item:", item);
   };
 
-  const handleDelete = async (itemId) => {
+  const handleDelete = async (orderid) => {
     try {
       // Make a DELETE request to the backend endpoint
-      await axios.delete(`/ecommerce/rest/orders/delete/${itemId}`, {
+      await axios.delete(`/ecommerce/rest/orders/delete/${orderid}`, {
         method: 'DELETE',
         headers: {
           'Authorization': token,
         },});
 
       // Remove the deleted item from the local state
-      setOrders((prevOrders) => prevOrders.filter((order) => order.id !== itemId));
+      setOrders((prevOrders) => prevOrders.filter((order) => order.id !== orderid));
       
-      console.log(`Item with id ${itemId} deleted successfully.`);
+      console.log(`Item with id ${orderid} deleted successfully.`);
     } catch (error) {
       console.error('Error deleting product:', error);
     }

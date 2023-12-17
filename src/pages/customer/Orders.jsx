@@ -4,6 +4,8 @@ import Nav from "./NavBar";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [orderItems, setOrderItems] = useState([]);
   const token = "Bearer " + localStorage.getItem('token');
   console.log('Authorization token:', token);
 
@@ -15,10 +17,10 @@ const Orders = () => {
           headers: {
             'Authorization': token,
           },
-          
         });
         const data = await response.json();
         setOrders(data);
+        console.log(data)
       } catch (error) {
         console.error('Error fetching orders:', error);
       }
@@ -26,6 +28,29 @@ const Orders = () => {
 
     fetchData();
   }, [token]);
+
+  const handleViewMore = async (order) => {
+    setSelectedOrder(order);
+    console.log(order);
+    try {
+      const response = await fetch(`/ecommerce/rest/orders/${order.id}/items`, {
+        method: 'GET',
+        headers: {
+          'Authorization': token,
+        },
+      });
+      const data = await response.json();
+      setOrderItems(data);
+      console.log(data)
+    } catch (error) {
+      console.error('Error fetching order items:', error);
+    }
+  };
+
+  const handleCloseView = () => {
+    setSelectedOrder(null);
+    setOrderItems([]);
+  };
 
   return (
     <div>
@@ -37,25 +62,48 @@ const Orders = () => {
           <p className="text-pink-500 text-2xl mt-[30px]">No orders available at the moment.</p>
         </div>
       ) : (
-        // Render orders table when there are orders
-        <table className="table-auto bg-white mx-auto w-3/4 mt-5">
-          <tbody>
-            <tr>
-              <th className="border px-4 py-2">Order Number</th>
-              <th className="border px-4 py-2">Amount Payable</th>
-              <th className="border px-4 py-2">Order Status</th>
-              <th className="border px-4 py-2">Items</th>
-            </tr>
-            {orders.map((order, index) => (
-              <tr key={index}>
-                <td className="border px-4 py-2">{order.orderNumber}</td>
-                <td className="border px-4 py-2">{`$${order.totalAmount.toFixed(2)}`}</td>
-                <td className="border px-4 py-2">{order.status}</td>
-                <td className="border px-4 py-2">{order.orderItems.map(item => item.itemName).join(', ')}</td>
+        <div>
+          {/* Render orders table when there are orders */}
+          <table className="table-auto bg-white mx-auto w-3/4 mt-5">
+            <tbody>
+              <tr>
+                <th className="border px-4 py-2">Order Number</th>
+                <th className="border px-4 py-2">Amount Payable</th>
+                <th className="border px-4 py-2">Order Status</th>
+                <th className="border px-4 py-2">Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+              {orders.map((order, index) => (
+                <tr key={index}>
+                  <td className="border px-4 py-2">{order.orderNumber}</td>
+                  <td className="border px-4 py-2">{`$${order.totalAmount.toFixed(2)}`}</td>
+                  <td className="border px-4 py-2">{order.status}</td>
+                  <td className="border px-4 py-2">
+                    <button onClick={() => handleViewMore(order)}>View More</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          {/* Display order items in a table when the "View More" button is clicked */}
+          {selectedOrder && (
+            <div className="mt-5">
+              <h2>Order Items - {selectedOrder.orderNumber}</h2>
+              <table className="table-auto bg-white mx-auto w-3/4 mt-5">
+                <tbody>
+                  {/* Render order items here */}
+                  {orderItems.map((item, index) => (
+                    <tr key={index}>
+                      <td className="border px-4 py-2">{item.productName}</td>
+                      {/* Add more columns as needed */}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <button onClick={handleCloseView}>Close</button>
+            </div>
+          )}
+        </div>
       )}
     </div>
   );

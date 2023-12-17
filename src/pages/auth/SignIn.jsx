@@ -7,6 +7,7 @@ import { ImSpinner9 } from "react-icons/im";
 const SignIn = () => {
   const [rotate, setRotate] = useState(false);
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -34,7 +35,8 @@ const SignIn = () => {
         const token = data.token;
         const username= data.user.username;
         localStorage.setItem("token", token);
-        localStorage.setItem("username", username);
+       localStorage.setItem("username", username); 
+       localStorage.setItem("email", email);
         if (data.user.userType === "NORMAL_USER") {
           navigate("/home");
         } else {
