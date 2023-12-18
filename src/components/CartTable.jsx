@@ -106,7 +106,7 @@ const CartTable = ({ cartItems, onAddMore, onReduceQuantity, onRemove }) => {
         {cartItems.map((item) => (
           <div
             key={item.id}
-            className="bg-white p-4 rounded shadow-md flex justify-between items-center space-x-4 overflow-x-auto"
+            className="bg-white p-4 rounded shadow-md flex justify-between items-center space-x-4 overflow-x-auto mx-[10px]"
           >
             <img
               src={item.imageUrl}

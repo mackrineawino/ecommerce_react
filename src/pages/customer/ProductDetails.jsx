@@ -140,7 +140,7 @@ const ProductDetails = () => {
             </div>
           </div>
           <div className='bg-[#C2D7EB] w-[428px] m mt-8 rounded flex flex-col justify-center items-center ' >
-            <h1 className='text-[20px]'>Delivery</h1><hr></hr>
+            <h1 className='text-[20px]'>Delivery Details</h1><hr/>
             
             <div className='flex flex-col items-center  mt-[20px]  '>
             <TbTruckDelivery className="mr-[10px] text-[40px] text-gray-800 text-pink-500"/>
