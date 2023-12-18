@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import CartTable from "../../components/CartTable";
 import Nav from "./NavBar";
 import { FaCartPlus } from "react-icons/fa6";
+import Footer from "./Footer"
 
 const ItemCart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -116,6 +117,7 @@ const ItemCart = () => {
           </div>
         </div>
       )}
+      <Footer/>
     </div>
   );
 };

@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Nav from './NavBar';
+import Footer from "./Footer"
+import { TbTruckDelivery } from "react-icons/tb";
+import { GiCardPickup } from "react-icons/gi";
+import { GiReturnArrow } from "react-icons/gi";
+
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -107,15 +112,15 @@ const ProductDetails = () => {
 
       {productDetails ? (
         <div className='flex'>
-          <div className=" mt-8 flex ml-[40px] bg-gray-100 rounded mr-[40px] w-[60%] ">
-          
+          <div className=" mt-8 flex ml-[40px] bg-[#C2D7EB] rounded mr-[40px] w-[60%] ">
+
             {/* Image on the left */}
             {productDetails.imageUrl && (
-              <img src={productDetails.imageUrl} alt={productDetails.productName} className="w-[400px] h-[400px] rounded p-[20px]" />
+              <img src={productDetails.imageUrl} alt={productDetails.productName} className="w-[400px] h-[400px] rounded p-[30px] mt-[30px]" />
             )}
 
             {/* Product details on the right */}
-            <div className="ml-[40px] mt-[60px] bbg-gray-100 w-[400px] h-[">
+            <div className="ml-[40px] mt-[20px] bg-gray-100 w-[400px] mr-[20px] mb-[20px] pl-[10px]">
               <h2 className="text-2xl mb-4">{productDetails.productName}</h2><hr style={{ width: '85%' }} /><br></br>
               <p className="text-gray-600 mb-4">{productDetails.productDescription}</p><hr style={{ width: '85%' }} /><br></br>
 
@@ -128,20 +133,39 @@ const ProductDetails = () => {
 
               <button
                 onClick={addToCart}
-                className={`bg-[var(--primary-pink)] text-white p-2 rounded mt-[65px] w-[85%] hover:bg-[var(--primary-blue)] ${successStatus[productDetails.id] ? 'bg-blue-500' : ''}`}
+                className={`bg-[var(--primary-pink)] text-white p-2 rounded mb-[20px] mt-[50px] w-[85%] hover:bg-[var(--primary-blue)] ${successStatus[productDetails.id] ? 'bg-blue-500' : ''}`}
               >
                 {successStatus[productDetails.id] ? 'Added ✔' : 'Add to Cart'}
               </button>
             </div>
           </div>
-          <div className='bg-gray-100 w-[428px] m mt-8 rounded'>
-            <h1>Right</h1>
+          <div className='bg-[#C2D7EB] w-[428px] m mt-8 rounded flex flex-col justify-center items-center ' >
+            <h1 className='text-[20px]'>Delivery</h1><hr></hr>
+            
+            <div className='flex flex-col items-center  mt-[20px]  '>
+            <TbTruckDelivery className="mr-[10px] text-[40px] text-gray-800 text-pink-500"/>
+            <p className='text-blue-500 text-[20px]'>Door Delivery</p>
+             <p> Delivery KSh 129 (free delivery if order above KSh 1,999)
+              </p>
+            </div>
+            <div className='flex flex-col items-center  mt-[20px]'>
+            <GiCardPickup className='mr-[10px] text-[50px] text-gray-800 text-pink-500'/>
+
+            <p className='text-blue-500 text-[20px]'>Pickup Station Details</p>
+              <p>
+              Delivery KSh 69 (free delivery if order above KSh 1,999)</p>
+            </div>
+            <div className='flex flex-col items-center mt-[20px]'>
+            <GiReturnArrow className='mr-[10px] text-[30px] text-gray-800 text-pink-500 '/>
+            <p className='text-blue-500 text-[20px]'>Return Policy</p>
+             <p> Easy Return, Quick Refund.Details</p>
+            </div>
           </div>
         </div>
       ) : (
         <p>Loading product details...</p>
       )}
-
+      <Footer />
     </div>
   );
 };

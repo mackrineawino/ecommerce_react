@@ -11,6 +11,7 @@ import { PiSneakerFill } from "react-icons/pi";
 import { GiBallerinaShoes } from "react-icons/gi";
 import { GiHighHeel } from "react-icons/gi";
 import { GiTakeMyMoney } from "react-icons/gi";
+import Footer from "./Footer"
 
 
 
@@ -179,46 +180,82 @@ const Home = () => {
 <p className='text-[var(--primary-pink)] font-bold'>SELL WITH US</p></a> 
         </div>
       </div>
+      <p className="text-white  text-center text-[30px] mt-[30px]">With CoolStuff, You Step Out with Confidence!</p>
       <div className="bg-gray-100 rounded-md  w-[90%] h-[200px] mx-auto mt-[20px]">
           <Slider {...sliderDetails}>
             <div>
               <img
-                src="https://taifaonline.com/storage/files/ke/5360/thumb-816x460-c48f75b9ffbc3e82ebd9bb0f80b282fb.jpg"
+                src="https://i.ebayimg.com/thumbs/images/g/XmMAAOSwB9dkWequ/s-l500.jpg"
                 alt="Slider1"
                 className=" object-cover rounded-md h-[200px] mx-auto"
               />
             </div>
             <div>
               <img
-                src="https://images.meesho.com/images/products/224713294/stz9u_512.webp"
+                src="https://cdn.walletmonitor.com/img/4301d6e0d25d0c74327fbc7af4ce45ec.jpg"
                 alt="Slider1"
                 className=" object-cover rounded-md h-[200px] mx-auto"
               />
             </div>
             <div>
               <img
-                src="https://images.yaoota.com/0tP0BoG0keW0zRkc1Rn_rkMwkXY=/trim/fit-in/500x500/filters:quality(80)/yaootaweb-production-ke/media/crawledproductimages/48c3717317c07697fb33b2545aac45f485435645.jpg"
+                src="https://backyardshoez.co.ke/wp-content/uploads/2023/03/DSC_2226.jpg"
                 alt="Slider1"
                 className=" object-cover rounded-md h-[200px] mx-auto"
               />
             </div>
             <div>
               <img
-                src="https://images.yaoota.com/Cv5uCbo3QldJ3qLl4YY_x_3jd3w=/trim/fit-in/500x500/filters:quality(80)/yaootaweb-production-ke/media/crawledproductimages/cab67f7c060b324dcb8aad3afbea63e880878f32.jpg"
+                src="https://backyardshoez.co.ke/wp-content/uploads/2023/03/DSC_2305.jpg"
                 alt="Slider1"
                 className=" object-cover rounded-md h-[200px] mx-auto"
               />
             </div>
             <div>
               <img
-                src="https://down-ph.img.susercontent.com/file/e1ca39519c1163a380a4b5bd0821eb05"
+                src="https://backyardshoez.co.ke/wp-content/uploads/2023/03/DSC_4686-scaled.jpg"
                 alt="Slider1"
                 className=" object-cover rounded-md h-[200px] mx-auto"
               />
             </div>
             <div>
               <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2Mf2eBk3jy40HlKIo17fdOxImjUolht9gLA&usqp=CAU"
+                src="https://static-01.daraz.com.bd/p/81922308e0ba3814358e8f7b2b405738.jpg_750x750.jpg_.webp"
+                alt="Slider2"
+                className=" object-cover rounded-md h-[200px] mx-auto"
+              />
+            </div>
+            <div>
+              <img
+                src="https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/52897f902562f039849a63b1dd9102e9.jpg?imageMogr2/auto-orient%7CimageView2/2/w/800/q/70/format/webp"
+                alt="Slider2"
+                className=" object-cover rounded-md h-[200px] mx-auto"
+              />
+            </div>
+            <div>
+              <img
+                src="https://i.ebayimg.com/thumbs/images/g/x6wAAOSw0ctiGePc/s-l96.jpg"
+                alt="Slider2"
+                className=" object-cover rounded-md h-[200px] mx-auto"
+              />
+            </div>
+            <div>
+              <img
+                src="https://i.insider.com/55a966f3371d22c6178b62ed?width=700"
+                alt="Slider2"
+                className=" object-cover rounded-md h-[200px] mx-auto"
+              />
+            </div>
+            <div>
+              <img
+                src="https://i.ebayimg.com/images/g/h8QAAOSwj5JgVZ5-/s-l960.png"
+                alt="Slider2"
+                className=" object-cover rounded-md h-[200px] mx-auto"
+              />
+            </div>
+            <div>
+              <img
+                src="https://cdn.walletmonitor.com/img/e1f18aedc8d01b2f0c5bbc170475e2d2.jpg"
                 alt="Slider2"
                 className=" object-cover rounded-md h-[200px] mx-auto"
               />
@@ -227,7 +264,7 @@ const Home = () => {
           </Slider>
         </div>
         
-
+<p className="text-white  text-center text-[30px] mt-[30px]">SHOP NOW</p>
 
       {products.length === 0 ? (
         <div className="flex flex-col items-center justify-center h-screen">
@@ -241,6 +278,7 @@ const Home = () => {
       ) : (
         <ProductGrid products={products} addToCart={addToCart} />
       )}
+      <Footer/>
     </div>
   );
 };

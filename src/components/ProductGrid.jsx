@@ -19,7 +19,9 @@ const ProductGrid = ({ products }) => {
 
           <img src={product.imageUrl} alt={product.productName} className="h-[150px] w-[150px] rounded mb-5 " />
 
-           <h2 className="text-lg text-blue-500 mb-2">{product.productName}</h2>
+          <h2 className="text-lg text-blue-500 mb-2 overflow-hidden  max-h-[40px]">
+              {product.productName}
+            </h2>
           <p className=" mb-2">Ksh {product.price}</p>
 
 
