@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { ImSpinner9 } from "react-icons/im";
 import { loadStripe } from "@stripe/stripe-js";
 import useForceUpdate  from 'use-force-update';
+import { TbTruckDelivery } from "react-icons/tb";
+
 
 
 const CartTable = ({ cartItems, onAddMore, onReduceQuantity, onRemove }) => {
@@ -98,7 +100,7 @@ const CartTable = ({ cartItems, onAddMore, onReduceQuantity, onRemove }) => {
   return (
     <div className="flex mt-[15px]">
       {/* Cart Items */}
-      <div className="flex flex-col gap-4 ml-[40px] w-[70%] bg-gray-100">
+      <div className="flex flex-col gap-4 ml-[40px] w-[70%] bg-[#C2D7EB]">
         <h2 className="text-center text-[20px] mt-[8px]">Cart</h2>
         <hr />
         {cartItems.map((item) => (
@@ -151,14 +153,19 @@ const CartTable = ({ cartItems, onAddMore, onReduceQuantity, onRemove }) => {
       </div>
 
       {/* Totals Card */}
-      <div className="bg-gray-100 w-[30%] p-4 rounded shadow-md mr-[40px] ml-[30px] h-[300px]">
+      <div className="bg-[#C2D7EB] w-[30%] p-4 rounded shadow-md mr-[40px] ml-[30px] h-[300px]">
         <h1 className="text-lg font-semibold mb-2 text-center">CART SUMMARY</h1>
         <div className="flex justify-between">
-          <h2 className="text-lg font-semibold mb-2">Totals</h2>
+          <h2 className="text-lg font-semibold mb-2">SubTotal</h2>
           <h3> KSh. {calculateCartTotal()}</h3>
         </div>
-        <div className="text-center bg-white h-[130px] mb-[10px] rounded">
-          <h2>Delivery</h2>
+        <div className="text-center h-[130px] mb-[10px] rounded text-gray-800 ">
+          <h1 className="bg-gray-400 font-bold text-black rounded ">Delivery</h1>
+        <TbTruckDelivery className="text-[40px] ml-[150px] mb-[10px]"/>
+          <h2 className="mb-[10px]" >Get free Delivery</h2>
+          <p> For items above Ksh: 10,000</p>
+          
+
         </div>
 
         <div className="mt-[2px]">

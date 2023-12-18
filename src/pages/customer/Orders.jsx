@@ -19,7 +19,11 @@ const Orders = () => {
           },
         });
         const data = await response.json();
-        setOrders(data);
+        console.log(data);
+        const userEmail = localStorage.getItem("email");
+      const userOrders = data.filter(order => order.email === userEmail);
+
+        setOrders(userOrders);
         console.log(data)
       } catch (error) {
         console.error('Error fetching orders:', error);

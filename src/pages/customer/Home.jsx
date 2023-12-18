@@ -4,6 +4,18 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import ProductGrid from '../../components/ProductGrid';
+import { GiBoots } from "react-icons/gi";
+import { MdOutlineLiveHelp } from "react-icons/md";
+import { GiReturnArrow } from "react-icons/gi";
+import { PiSneakerFill } from "react-icons/pi";
+import { GiBallerinaShoes } from "react-icons/gi";
+import { GiHighHeel } from "react-icons/gi";
+import { GiTakeMyMoney } from "react-icons/gi";
+
+
+
+
+
 import { FaProductHunt } from 'react-icons/fa6';
 
 const Home = () => {
@@ -67,75 +79,156 @@ const Home = () => {
 
   const sliderSettings = {
     autoplay: true,
-    autoplaySpeed: 2000, 
+    autoplaySpeed: 2000,
     infinite: true,
     speed: 500,
-    slidesToShow: 2,
+    slidesToShow: 3,
     slidesToScroll: 1,
     arrows: false,
-    dots: false, 
+    dots: false,
+  };
+  const sliderDetails = {
+    autoplay: true,
+    autoplaySpeed: 2000,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 6,
+    slidesToScroll: 1,
+    arrows: true,
+    dots: false,
   };
 
   return (
     <div>
       <Nav />
       <div className='flex justify-between mt-[20px]'>
-      <div className='bg-gray-100 ml-[40px] h-[315px] rounded w-[300px]'>
-<h1>herseeee</h1>
-</div>
-      <div className="bg-gray-100 rounded-md   w-[50%] h-[315px]  ml-[30px] mr-[30px]">
-        <Slider {...sliderSettings}>
-          <div>
-            <img
-              src="https://taifaonline.com/storage/files/ke/5360/thumb-816x460-c48f75b9ffbc3e82ebd9bb0f80b282fb.jpg"
-              alt="Slider1"
-              className=" object-cover rounded-md h-[300px] mx-auto"
-            />
-          </div>
-          <div>
-            <img
-              src="https://images.meesho.com/images/products/224713294/stz9u_512.webp"
-              alt="Slider1"
-              className=" object-cover rounded-md h-[300px] mx-auto"
-            />
-          </div>
-          <div>
-            <img
-              src="https://images.yaoota.com/0tP0BoG0keW0zRkc1Rn_rkMwkXY=/trim/fit-in/500x500/filters:quality(80)/yaootaweb-production-ke/media/crawledproductimages/48c3717317c07697fb33b2545aac45f485435645.jpg"
-              alt="Slider1"
-              className=" object-cover rounded-md h-[300px] mx-auto"
-            />
-          </div>
-          <div>
-            <img
-              src="https://images.yaoota.com/Cv5uCbo3QldJ3qLl4YY_x_3jd3w=/trim/fit-in/500x500/filters:quality(80)/yaootaweb-production-ke/media/crawledproductimages/cab67f7c060b324dcb8aad3afbea63e880878f32.jpg"
-              alt="Slider1"
-              className=" object-cover rounded-md h-[300px] mx-auto"
-            />
-          </div>
-          <div>
-            <img
-              src="https://down-ph.img.susercontent.com/file/e1ca39519c1163a380a4b5bd0821eb05"
-              alt="Slider1"
-              className=" object-cover rounded-md h-[300px] mx-auto"
-            />
-          </div>
-          <div>
-            <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2Mf2eBk3jy40HlKIo17fdOxImjUolht9gLA&usqp=CAU"
-              alt="Slider2"
-              className=" object-cover rounded-md h-[300px] mx-auto"
-            />
-          </div>
-          {/* Add more slider items as needed */}
-        </Slider>
+        <div className='bg-[#C2D7EB] ml-[40px] h-[315px] rounded w-[200px] flex flex-col justify-center text-left pl-[30px]'>
+          <h1 className='text-[25px] text-gray-800'>CATEGORIES</h1>
+          <a href='' className='flex items-center ml-2 mt-[30px] text-[20px]'>
+            <GiBoots
+              className='text-[30px] mr-[10px] text-gray-800' />
+            <p className='text-[var(--primary-pink)] font-bold'>Boots</p>
+          </a>
+          <a href='' className='flex items-center ml-2 mt-[10px] text-[20px]'>
+            <PiSneakerFill className='text-[30px] mr-[10px] text-gray-800' />
+            <p className='text-[var(--primary-pink)] font-bold'>Sneakers</p>
+          </a>
+          <a href='' className='flex items-center ml-2 mt-[10px] text-[20px]'>
+            <GiBallerinaShoes className='text-[30px] mr-[10px] text-gray-800' />
+            <p className='text-[var(--primary-pink)] font-bold'>Dolls</p>
+          </a>
+          <a href='' className='flex items-center ml-2 mt-[10px] text-[20px]'>
+            <GiHighHeel className='text-[30px] mr-[10px] text-gray-800' />
+            <p className='text-[var(--primary-pink)] font-bold'>Stilettos</p>
+          </a>
+        </div>
+
+        <div className="bg-gray-100 rounded-md  w-[62%] h-[315px] mx-[10px]">
+          <Slider {...sliderSettings}>
+            <div>
+              <img
+                src="https://taifaonline.com/storage/files/ke/5360/thumb-816x460-c48f75b9ffbc3e82ebd9bb0f80b282fb.jpg"
+                alt="Slider1"
+                className=" object-cover rounded-md h-[300px] mx-auto"
+              />
+            </div>
+            <div>
+              <img
+                src="https://images.meesho.com/images/products/224713294/stz9u_512.webp"
+                alt="Slider1"
+                className=" object-cover rounded-md h-[300px] mx-auto"
+              />
+            </div>
+            <div>
+              <img
+                src="https://images.yaoota.com/0tP0BoG0keW0zRkc1Rn_rkMwkXY=/trim/fit-in/500x500/filters:quality(80)/yaootaweb-production-ke/media/crawledproductimages/48c3717317c07697fb33b2545aac45f485435645.jpg"
+                alt="Slider1"
+                className=" object-cover rounded-md h-[300px] mx-auto"
+              />
+            </div>
+            <div>
+              <img
+                src="https://images.yaoota.com/Cv5uCbo3QldJ3qLl4YY_x_3jd3w=/trim/fit-in/500x500/filters:quality(80)/yaootaweb-production-ke/media/crawledproductimages/cab67f7c060b324dcb8aad3afbea63e880878f32.jpg"
+                alt="Slider1"
+                className=" object-cover rounded-md h-[300px] mx-auto"
+              />
+            </div>
+            <div>
+              <img
+                src="https://down-ph.img.susercontent.com/file/e1ca39519c1163a380a4b5bd0821eb05"
+                alt="Slider1"
+                className=" object-cover rounded-md h-[300px] mx-auto"
+              />
+            </div>
+            <div>
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2Mf2eBk3jy40HlKIo17fdOxImjUolht9gLA&usqp=CAU"
+                alt="Slider2"
+                className=" object-cover rounded-md h-[300px] mx-auto"
+              />
+            </div>
+            {/* Add more slider items as needed */}
+          </Slider>
+        </div>
+        
+       
+        <div className='bg-[#C2D7EB] mr-[40px] h-[315px] rounded w-[200px] flex flex-col justify-center pl-[20px] ' >
+          <a href='' className='flex mb-[40px]'> <MdOutlineLiveHelp className='mr-[10px] text-[30px] text-gray-800' /><p className='text-[var(--primary-pink)] font-bold'>HELP CENTER</p></a> 
+         <a href='' className='flex mb-[40px]'><GiReturnArrow className='mr-[10px] text-[30px] text-gray-800'/><p className='text-[var(--primary-pink)] font-bold'>EASY RETURN</p></a> 
+          <a href='' className='flex mb-[40px]'><GiTakeMyMoney className='mr-[10px] text-[30px]  text-gray-800'/>
+<p className='text-[var(--primary-pink)] font-bold'>SELL WITH US</p></a> 
+        </div>
       </div>
-      <div className='bg-gray-100 mr-[40px] h-[315px] rounded w-[300px]'>
-<h1>herseeee</h1>
-</div>
-      </div>
-     
-     
+      <div className="bg-gray-100 rounded-md  w-[90%] h-[200px] mx-auto mt-[20px]">
+          <Slider {...sliderDetails}>
+            <div>
+              <img
+                src="https://taifaonline.com/storage/files/ke/5360/thumb-816x460-c48f75b9ffbc3e82ebd9bb0f80b282fb.jpg"
+                alt="Slider1"
+                className=" object-cover rounded-md h-[200px] mx-auto"
+              />
+            </div>
+            <div>
+              <img
+                src="https://images.meesho.com/images/products/224713294/stz9u_512.webp"
+                alt="Slider1"
+                className=" object-cover rounded-md h-[200px] mx-auto"
+              />
+            </div>
+            <div>
+              <img
+                src="https://images.yaoota.com/0tP0BoG0keW0zRkc1Rn_rkMwkXY=/trim/fit-in/500x500/filters:quality(80)/yaootaweb-production-ke/media/crawledproductimages/48c3717317c07697fb33b2545aac45f485435645.jpg"
+                alt="Slider1"
+                className=" object-cover rounded-md h-[200px] mx-auto"
+              />
+            </div>
+            <div>
+              <img
+                src="https://images.yaoota.com/Cv5uCbo3QldJ3qLl4YY_x_3jd3w=/trim/fit-in/500x500/filters:quality(80)/yaootaweb-production-ke/media/crawledproductimages/cab67f7c060b324dcb8aad3afbea63e880878f32.jpg"
+                alt="Slider1"
+                className=" object-cover rounded-md h-[200px] mx-auto"
+              />
+            </div>
+            <div>
+              <img
+                src="https://down-ph.img.susercontent.com/file/e1ca39519c1163a380a4b5bd0821eb05"
+                alt="Slider1"
+                className=" object-cover rounded-md h-[200px] mx-auto"
+              />
+            </div>
+            <div>
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2Mf2eBk3jy40HlKIo17fdOxImjUolht9gLA&usqp=CAU"
+                alt="Slider2"
+                className=" object-cover rounded-md h-[200px] mx-auto"
+              />
+            </div>
+            {/* Add more slider items as needed */}
+          </Slider>
+        </div>
+        
+
+
       {products.length === 0 ? (
         <div className="flex flex-col items-center justify-center h-screen">
           <div>
