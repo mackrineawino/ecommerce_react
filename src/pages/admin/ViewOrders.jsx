@@ -29,7 +29,7 @@ const ViewOrders = () => {
     fetchData();
   }, [token]); // Empty dependency array ensures the effect runs only once on mount
 
-  const columns = ["orderNumber", "totalAmount", "email", "status", "orderItems", ];
+  const columns = ["orderNumber", "totalAmount", "email", "status"];
 
   const handleEdit = (item) => {
     // Implement your edit logic here

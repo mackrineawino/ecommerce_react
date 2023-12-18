@@ -125,7 +125,6 @@ const ProductDetails = () => {
               <p className="text-gray-600 mb-4">{productDetails.productDescription}</p><hr style={{ width: '85%' }} /><br></br>
 
               <p className="text-lg font-bold ">Ksh {productDetails.price}</p><br></br>
-              <p className="text-gray-600">Availability: {availability} in stock</p>
 
               {cartErrorMessage && (
                 <p className="text-red-500">{cartErrorMessage}</p>
@@ -163,7 +162,7 @@ const ProductDetails = () => {
           </div>
         </div>
       ) : (
-        <p>Loading product details...</p>
+        <p className='text-white'>Loading product details...</p>
       )}
       <Footer />
     </div>

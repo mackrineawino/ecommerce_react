@@ -21,8 +21,9 @@ const ItemCart = () => {
           },
         });
         const data = await response.json();
-        setCartItems(data);
-        console.log(data)
+        const filteredData = data.filter(item => item.order === null);
+        setCartItems(filteredData);
+        console.log(filteredData)
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -117,7 +118,7 @@ const ItemCart = () => {
           </div>
         </div>
       )}
-      <Footer/>
+      {/* <Footer/> */}
     </div>
   );
 };
