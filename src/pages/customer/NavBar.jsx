@@ -40,9 +40,10 @@ const Navbar = () => {
         },
       });
       const cartItems = await response.json();
+      const filteredData = cartItems.filter(item => item.order === null);
 
       // Assuming the API returns an array of cart items
-      setCartItemCount(cartItems.length);
+      setCartItemCount(filteredData.length);
     } catch (error) {
       console.error("Error fetching cart items:", error);
     }

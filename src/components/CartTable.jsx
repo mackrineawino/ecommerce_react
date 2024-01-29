@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ImSpinner9 } from "react-icons/im";
 import { loadStripe } from "@stripe/stripe-js";
-import useForceUpdate  from 'use-force-update';
+import useForceUpdate from 'use-force-update';
 import { TbTruckDelivery } from "react-icons/tb";
 
 
@@ -106,7 +106,7 @@ const CartTable = ({ cartItems, onAddMore, onReduceQuantity, onRemove }) => {
         {cartItems.map((item) => (
           <div
             key={item.id}
-            className="bg-white p-4 rounded shadow-md flex justify-between items-center space-x-4 overflow-x-auto mx-[10px]"
+            className="bg-gray-100 p-4 rounded shadow-md flex justify-between items-center space-x-4 overflow-x-auto mx-[10px]"
           >
             <img
               src={item.imageUrl}
@@ -133,11 +133,12 @@ const CartTable = ({ cartItems, onAddMore, onReduceQuantity, onRemove }) => {
             {/* ... */}
 
             <p className="text-gray-600 mb-2 text-[40px] text-center">
-  <span className="inline-block w-[35px] h-[35px] bg-[var(--primary-pink)] hover:bg-[var(--primary-blue)] text-white rounded-full text-[35px] leading-[35px] cursor-pointer" onClick={() => handleAddMore(item)}>+</span>
-</p>
+              <span className="inline-block w-[35px] h-[35px] bg-[var(--primary-pink)] hover:bg-[var(--primary-blue)] text-white rounded-full text-[35px] leading-[35px] cursor-pointer" onClick={() => handleAddMore(item)}>+</span>
+            </p>
 
 
             <button
+              id="remove-from-cart"
               onClick={() => handleRemove(item)}
               className="bg-[var(--primary-pink)] text-white px-4 py-2 rounded hover:bg-[var(--primary-blue)] h-10"
               disabled={removeLoading}
@@ -161,10 +162,10 @@ const CartTable = ({ cartItems, onAddMore, onReduceQuantity, onRemove }) => {
         </div>
         <div className="text-center h-[130px] mb-[10px] rounded text-gray-800 ">
           <h1 className="bg-gray-400 font-bold text-black rounded ">Delivery</h1>
-        <TbTruckDelivery className="text-[40px] ml-[150px] mb-[10px]"/>
+          <TbTruckDelivery className="text-[40px] ml-[150px] mb-[10px]" />
           <h2 className="mb-[10px]" >Get free Delivery</h2>
           <p> For items above Ksh: 10,000</p>
-          
+
 
         </div>
 

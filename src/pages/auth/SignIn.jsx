@@ -114,6 +114,7 @@ const SignIn = () => {
 
             <button
               type="submit"
+              id="login-button"
               className="w-full mt-4 bg-[var(--primary-blue)] text-white py-3 px-4 border-none cursor-pointer rounded-md text-base hover:bg-[var(--primary-pink)]"
               disabled={loading}
             >

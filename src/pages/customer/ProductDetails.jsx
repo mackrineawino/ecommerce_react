@@ -120,7 +120,7 @@ const ProductDetails = () => {
             )}
 
             {/* Product details on the right */}
-            <div className="ml-[40px] mt-[20px] bg-gray-100 w-[400px] mr-[20px] mb-[20px] pl-[10px]">
+            <div id="product-details" className="ml-[40px] mt-[20px] bg-gray-100 w-[400px] mr-[20px] mb-[20px] pl-[10px]">
               <h2 className="text-2xl mb-4">{productDetails.productName}</h2><hr style={{ width: '85%' }} /><br></br>
               <p className="text-gray-600 mb-4">{productDetails.productDescription}</p><hr style={{ width: '85%' }} /><br></br>
 
@@ -129,8 +129,8 @@ const ProductDetails = () => {
               {cartErrorMessage && (
                 <p className="text-red-500">{cartErrorMessage}</p>
               )}
-
               <button
+                id="add-to-cart-btn"
                 onClick={addToCart}
                 className={`bg-[var(--primary-pink)] text-white p-2 rounded mb-[20px] mt-[50px] w-[85%] hover:bg-[var(--primary-blue)] ${successStatus[productDetails.id] ? 'bg-blue-500' : ''}`}
               >
