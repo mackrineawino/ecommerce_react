@@ -16,7 +16,7 @@ jobs:
           name: Install Docker
           command: |
             apk add --no-cache docker
-            service docker start
+            /etc/init.d/docker start
             docker --version
       - setup_remote_docker:
           docker_layer_caching: true
