@@ -15,9 +15,9 @@ jobs:
       - run:
           name: Install Docker
           command: |
-            sudo apt-get update
-            sudo apt-get install -y docker.io
-            sudo service docker start
+            apt-get update
+            apt-get install -y docker.io
+            service docker start
             docker --version
       - setup_remote_docker:
           docker_layer_caching: true
