@@ -1,10 +1,11 @@
 version: 2.1
+
 executors:
   docker-publisher:
     environment:
       IMAGE_NAME: mackie86/ecommercereact
     docker:
-      - image: cimg/openjdk:17.0.9-node
+      - image: node:alpine
 
 jobs:
   build:
@@ -13,11 +14,6 @@ jobs:
       - checkout
       - setup_remote_docker:
           docker_layer_caching: true
-      - run:
-          name: Install Docker
-          command: |
-            sudo apt update
-            sudo apt install docker.io -y
       - run:
           name: Build Docker Image
           command: |
@@ -29,7 +25,6 @@ jobs:
           root: .
           paths:
             - ./image.tar
-
   publish-latest:
     executor: docker-publisher
     steps:
@@ -48,7 +43,6 @@ jobs:
             docker tag $IMAGE_NAME:latest $IMAGE_NAME:$IMAGE_TAG
             docker push $IMAGE_NAME:latest
             docker push $IMAGE_NAME:$IMAGE_TAG
-
   publish-tag:
     executor: docker-publisher
     steps:
