@@ -5,20 +5,22 @@ executors:
     environment:
       IMAGE_NAME: mackie86/ecommercereact
     docker:
-      - image: node
+       - image: cimg/openjdk:17.0.9-node
 
 jobs:
   build:
     executor: docker-publisher
     steps:
       - checkout
-      - run:
-          name: Install Docker
-          command: |
-            apt-get update
-            apt-get install -y docker.io
-            service docker start
-            docker --version
+      # - run:
+      #     name: Install requirements
+      #     command: |
+      #       python3 -m venv venv
+      #       . venv/bin/activate
+      #       pip install --upgrade pip
+      #       pip install -r requirements.txt
+      #       python3 manage.py makemigrations
+      #       python3 manage.py migrate
       - setup_remote_docker:
           docker_layer_caching: true
       - run:
@@ -32,17 +34,16 @@ jobs:
           root: .
           paths:
             - ./image.tar
-
   publish-latest:
     executor: docker-publisher
     steps:
       - attach_workspace:
           at: /tmp/workspace
+      - setup_remote_docker:
+          docker_layer_caching: true
       - run:
           name: Load archived Docker
           command: docker load -i /tmp/workspace/image.tar
-      - setup_remote_docker:
-          docker_layer_caching: true
       - run:
           name: Publish Docker Image to Docker Hub
           command: |
@@ -51,17 +52,16 @@ jobs:
             docker tag $IMAGE_NAME:latest $IMAGE_NAME:$IMAGE_TAG
             docker push $IMAGE_NAME:latest
             docker push $IMAGE_NAME:$IMAGE_TAG
-
   publish-tag:
     executor: docker-publisher
     steps:
       - attach_workspace:
           at: .
+      - setup_remote_docker:
+          docker_layer_caching: true
       - run:
           name: Load archived Docker
           command: docker load -i /tmp/workspace/image.tar
-      - setup_remote_docker:
-          docker_layer_caching: true
       - run:
           name: Publish Docker Image to Docker Hub
           command: |
