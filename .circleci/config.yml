@@ -15,8 +15,9 @@ jobs:
       - run:
           name: Install Docker
           command: |
-            apk add --no-cache docker
-            service docker start
+            sudo apt-get update
+            sudo apt-get install -y docker.io
+            sudo service docker start
             docker --version
       - setup_remote_docker:
           docker_layer_caching: true
