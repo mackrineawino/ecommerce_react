@@ -174,9 +174,9 @@ const Home = () => {
         
        
         <div className='bg-[#C2D7EB] mr-[40px] h-[315px] rounded w-[200px] flex flex-col justify-center pl-[20px] ' >
-          <a href='' className='flex mb-[40px]'> <MdOutlineLiveHelp className='mr-[10px] text-[30px] text-gray-800' /><p className='text-[var(--primary-pink)] font-bold'>HELP CENTER</p></a> 
-         <a href='' className='flex mb-[40px]'><GiReturnArrow className='mr-[10px] text-[30px] text-gray-800'/><p className='text-[var(--primary-pink)] font-bold'>EASY RETURN</p></a> 
-          <a href='' className='flex mb-[40px]'><GiTakeMyMoney className='mr-[10px] text-[30px]  text-gray-800'/>
+          <a href='https://hub.docker.com/' className='flex mb-[40px]'> <MdOutlineLiveHelp className='mr-[10px] text-[30px] text-gray-800' /><p className='text-[var(--primary-pink)] font-bold'>HELP CENTER</p></a> 
+         <a href='https://hub.docker.com/' className='flex mb-[40px]'><GiReturnArrow className='mr-[10px] text-[30px] text-gray-800'/><p className='text-[var(--primary-pink)] font-bold'>EASY RETURN</p></a> 
+          <a href='https://hub.docker.com/' className='flex mb-[40px]'><GiTakeMyMoney className='mr-[10px] text-[30px]  text-gray-800'/>
 <p className='text-[var(--primary-pink)] font-bold'>SELL WITH US</p></a> 
         </div>
       </div>
