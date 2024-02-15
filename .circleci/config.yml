@@ -12,6 +12,12 @@ jobs:
     executor: docker-publisher
     steps:
       - checkout
+      - run:
+          name: Install Docker
+          command: |
+            apk add --no-cache docker
+            service docker start
+            docker --version
       - setup_remote_docker:
           docker_layer_caching: true
       - run:
@@ -25,16 +31,17 @@ jobs:
           root: .
           paths:
             - ./image.tar
+
   publish-latest:
     executor: docker-publisher
     steps:
       - attach_workspace:
           at: /tmp/workspace
-      - setup_remote_docker:
-          docker_layer_caching: true
       - run:
           name: Load archived Docker
           command: docker load -i /tmp/workspace/image.tar
+      - setup_remote_docker:
+          docker_layer_caching: true
       - run:
           name: Publish Docker Image to Docker Hub
           command: |
@@ -43,16 +50,17 @@ jobs:
             docker tag $IMAGE_NAME:latest $IMAGE_NAME:$IMAGE_TAG
             docker push $IMAGE_NAME:latest
             docker push $IMAGE_NAME:$IMAGE_TAG
+
   publish-tag:
     executor: docker-publisher
     steps:
       - attach_workspace:
           at: .
-      - setup_remote_docker:
-          docker_layer_caching: true
       - run:
           name: Load archived Docker
           command: docker load -i /tmp/workspace/image.tar
+      - setup_remote_docker:
+          docker_layer_caching: true
       - run:
           name: Publish Docker Image to Docker Hub
           command: |
