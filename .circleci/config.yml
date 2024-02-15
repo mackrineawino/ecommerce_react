@@ -5,7 +5,7 @@ executors:
     environment:
       IMAGE_NAME: mackie86/ecommercereact
     docker:
-      - image: node:alpine
+      - image: node
 
 jobs:
   build:
@@ -16,7 +16,7 @@ jobs:
           name: Install Docker
           command: |
             apk add --no-cache docker
-            rc-service docker start
+            service docker start
             docker --version
       - setup_remote_docker:
           docker_layer_caching: true
