@@ -50,23 +50,23 @@ const Navbar = () => {
   };
 
   // Function to handle removing an item from the cart
-  const handleRemoveFromCart = async (itemId) => {
-    try {
-      // Make the API call to remove the item from the cart
-      await fetch(`/ecommerce/rest/cartItems/remove/${itemId}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token,
-        },
-      });
+  // const handleRemoveFromCart = async (itemId) => {
+  //   try {
+  //     // Make the API call to remove the item from the cart
+  //     await fetch(`/ecommerce/rest/cartItems/remove/${itemId}`, {
+  //       method: "DELETE",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: token,
+  //       },
+  //     });
 
-      // After successful removal, fetch the updated cart item count
-      fetchData();
-    } catch (error) {
-      console.error("Error removing item from cart:", error);
-    }
-  };
+  //     // After successful removal, fetch the updated cart item count
+  //     fetchData();
+  //   } catch (error) {
+  //     console.error("Error removing item from cart:", error);
+  //   }
+  // };
 
   const getInitials = (name) => {
     const names = name.split(" ");

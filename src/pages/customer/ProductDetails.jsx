@@ -12,7 +12,6 @@ const ProductDetails = () => {
   const [productDetails, setProductDetails] = useState(null);
   const [cartItems, setCartItems] = useState([]);
   const [successStatus, setSuccessStatus] = useState({});
-  const [availability, setAvailability] = useState(0);
   const [cartErrorMessage, setCartErrorMessage] = useState('');
 
   const token = "Bearer " + localStorage.getItem('token');

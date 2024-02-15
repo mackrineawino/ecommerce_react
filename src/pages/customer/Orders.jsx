@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { IoMdArchive } from 'react-icons/io';
 import Nav from "./NavBar";
-import Footer from "./Footer";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);

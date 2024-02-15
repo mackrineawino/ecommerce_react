@@ -105,20 +105,20 @@ const Home = () => {
       <div className='flex justify-between mt-[20px]'>
         <div className='bg-[#C2D7EB] ml-[40px] h-[315px] rounded w-[200px] flex flex-col justify-center text-left pl-[30px]'>
           <h1 className='text-[25px] text-gray-800'>CATEGORIES</h1>
-          <a href='' className='flex items-center ml-2 mt-[30px] text-[20px]'>
+          <a href='https://hub.docker.com/' className='flex items-center ml-2 mt-[30px] text-[20px]'>
             <GiBoots
               className='text-[30px] mr-[10px] text-gray-800' />
             <p className='text-[var(--primary-pink)] font-bold'>Boots</p>
           </a>
-          <a href='' className='flex items-center ml-2 mt-[10px] text-[20px]'>
+          <a href='https://hub.docker.com/' className='flex items-center ml-2 mt-[10px] text-[20px]'>
             <PiSneakerFill className='text-[30px] mr-[10px] text-gray-800' />
             <p className='text-[var(--primary-pink)] font-bold'>Sneakers</p>
           </a>
-          <a href='' className='flex items-center ml-2 mt-[10px] text-[20px]'>
+          <a href='https://hub.docker.com/' className='flex items-center ml-2 mt-[10px] text-[20px]'>
             <GiBallerinaShoes className='text-[30px] mr-[10px] text-gray-800' />
             <p className='text-[var(--primary-pink)] font-bold'>Dolls</p>
           </a>
-          <a href='' className='flex items-center ml-2 mt-[10px] text-[20px]'>
+          <a href='https://hub.docker.com/' className='flex items-center ml-2 mt-[10px] text-[20px]'>
             <GiHighHeel className='text-[30px] mr-[10px] text-gray-800' />
             <p className='text-[var(--primary-pink)] font-bold'>Stilettos</p>
           </a>
