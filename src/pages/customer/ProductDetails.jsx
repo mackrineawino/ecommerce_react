@@ -12,6 +12,7 @@ const ProductDetails = () => {
   const [productDetails, setProductDetails] = useState(null);
   const [cartItems, setCartItems] = useState([]);
   const [successStatus, setSuccessStatus] = useState({});
+  const [availability, setAvailability] = useState(0);
   const [cartErrorMessage, setCartErrorMessage] = useState('');
 
   const token = "Bearer " + localStorage.getItem('token');
@@ -61,7 +62,7 @@ const ProductDetails = () => {
       const cartItem = cartItems.find(item => item.productid === productDetails.id);
 
       // Update availability based on the quantity in the cart
-      const updatedAvailability = cartItem ? productDetails.availability - cartItem.quantity : productDetails.availability;
+      const updatedAvailability = cartItem ? availability - cartItem.quantity : availability;
       setAvailability(updatedAvailability);
 
       // Check if the product is already in the cart
